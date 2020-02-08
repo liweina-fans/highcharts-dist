@@ -1,6 +1,6 @@
 /* *
  *
- *  (c) 2009-2019 Torstein Honsi
+ *  (c) 2009-2020 Torstein Honsi
  *
  *  License: www.highcharts.com/license
  *
@@ -10,10 +10,10 @@
 'use strict';
 import H from '../parts/Globals.js';
 import U from '../parts/Utilities.js';
-var extend = U.extend, isArray = U.isArray, pick = U.pick;
+var addEvent = U.addEvent, extend = U.extend, fireEvent = U.fireEvent, isArray = U.isArray, pick = U.pick;
 import '../parts/Axis.js';
 import '../parts/Series.js';
-var addEvent = H.addEvent, find = H.find, fireEvent = H.fireEvent, Axis = H.Axis, Series = H.Series;
+var find = H.find, Axis = H.Axis, Series = H.Series;
 /**
  * Returns the first break found where the x is larger then break.from and
  * smaller then break.to.

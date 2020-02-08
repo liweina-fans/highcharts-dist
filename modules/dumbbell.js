@@ -1,5 +1,5 @@
 /*
- Highcharts JS v8.0.0 (2019-12-10)
+ Highcharts JS v8.0.0 (2020-02-08)
 
  (c) 2009-2019 Sebastian Bochan, Rafal Sebestjanski
 
@@ -12,6 +12,6 @@ p=0:p>=h.len&&(p=h.len);0>l?l=0:l>=h.len&&(l=h.len);if(0>a.plotX||a.plotX>d.len)
 b?"animate":"attr";a.connector||(a.connector=this.chart.renderer.path().addClass("highcharts-lollipop-stem").attr({zIndex:-1}).add(this.markerGroup));a.connector[b](this.getConnectorAttribs(a))},getColumnMetrics:function(){var a=q.getColumnMetrics.apply(this,arguments);a.offset+=a.width/2;return a},translatePoint:m.translate,setShapeArgs:k.columnrange.prototype.translate,translate:function(){this.setShapeArgs.apply(this);this.translatePoint.apply(this,arguments);this.points.forEach(function(a){var b=
 a.shapeArgs,e=a.pointWidth;a.plotX=b.x;b.x=a.plotX-e/2;a.tooltipPos=null})},seriesDrawPoints:m.drawPoints,drawPoints:function(){var a=this.chart,b=this.points.length,e=this.lowColor=this.options.lowColor,c=0;for(this.seriesDrawPoints.apply(this,arguments);c<b;){var d=this.points[c];this.drawConnector(d);d.upperGraphic&&(d.upperGraphic.element.point=d,d.upperGraphic.addClass("highcharts-lollipop-high"));d.connector.element.point=d;if(d.lowerGraphic){var h=d.zone&&d.zone.color;h=f(d.options.lowColor,
 e,d.options.color,h,d.color,this.color);a.styledMode||d.lowerGraphic.attr({fill:h});d.lowerGraphic.addClass("highcharts-lollipop-low")}c++}},markerAttribs:function(){var a=m.markerAttribs.apply(this,arguments);a.x=Math.floor(a.x);a.y=Math.floor(a.y);return a},pointAttribs:function(a,b){var e=t.pointAttribs.apply(this,arguments);"hover"===b&&delete e.fill;return e}},{destroyElements:n.destroyElements,isValid:n.isValid,pointSetState:n.setState,setState:function(){var a=this.series,c=a.chart,e=this.options,
-g=f(e.lowColor,a.options.lowColor,e.color,this.zone&&this.zone.color,this.color,a.color),d="attr";this.pointSetState.apply(this,arguments);this.state||(d="animate",this.lowerGraphic&&!c.styledMode&&(this.lowerGraphic.attr({fill:g}),this.upperGraphic&&(c={y:this.y,zone:this.zone},this.y=this.high,this.zone=this.zone?this.getZone():void 0,e=f(this.marker?this.marker.fillColor:void 0,e.color,this.zone?this.zone.color:void 0,this.color),this.upperGraphic.attr({fill:e}),b.extend(this,c))));this.connector[d](a.getConnectorAttribs(this))}})});
-c(b,"masters/modules/dumbbell.src.js",[],function(){})});
+g=f(e.lowColor,a.options.lowColor,e.color,this.zone&&this.zone.color,this.color,a.color),d="attr";this.pointSetState.apply(this,arguments);this.state||(d="animate",this.lowerGraphic&&!c.styledMode&&(this.lowerGraphic.attr({fill:g}),this.upperGraphic&&(c={y:this.y,zone:this.zone},this.y=this.high,this.zone=this.zone?this.getZone():void 0,e=f(this.marker?this.marker.fillColor:void 0,e.color,this.zone?this.zone.color:void 0,this.color),this.upperGraphic.attr({fill:e}),b.extend(this,c))));this.connector[d](a.getConnectorAttribs(this))}});
+""});c(b,"masters/modules/dumbbell.src.js",[],function(){})});
 //# sourceMappingURL=dumbbell.js.map

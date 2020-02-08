@@ -1,6 +1,6 @@
 /* *
  *
- *  (c) 2010-2019 Torstein Honsi
+ *  (c) 2010-2020 Torstein Honsi
  *
  *  License: www.highcharts.com/license
  *
@@ -149,6 +149,7 @@ seriesType('area', 'line',
      * @sample {highcharts} highcharts/plotoptions/area-threshold-infinity/
      *         A threshold of Infinity
      *
+     * @type    {number|null}
      * @since   2.0
      * @product highcharts highstock
      */

@@ -12,11 +12,12 @@
  * */
 'use strict';
 import H from '../parts/Globals.js';
-import U from '../parts/Utilities.js';
-var clamp = U.clamp, extend = U.extend, pick = U.pick;
 /**
  * @typedef {"circle"|"diamond"|"hexagon"|"square"} Highcharts.TilemapShapeValue
  */
+''; // detach doclets above
+import U from '../parts/Utilities.js';
+var addEvent = U.addEvent, clamp = U.clamp, extend = U.extend, pick = U.pick;
 import '../parts-map/HeatmapSeries.js';
 var seriesType = H.seriesType, 
 // Utility func to get padding definition from tile size division
@@ -263,7 +264,7 @@ H.tileShapeTypes = {
 // Extension to add pixel padding for series. Uses getSeriesPixelPadding on each
 // series and adds the largest padding required. If no series has this function
 // defined, we add nothing.
-H.addEvent(H.Axis, 'afterSetAxisTranslation', function () {
+addEvent(H.Axis, 'afterSetAxisTranslation', function () {
     if (this.recomputingForTilemap || this.coll === 'colorAxis') {
         return;
     }
@@ -321,7 +322,8 @@ seriesType('tilemap', 'heatmap'
  *
  * @extends      plotOptions.heatmap
  * @since        6.0.0
- * @excluding    jitter, joinBy, shadow, allAreas, mapData, data
+ * @excluding    jitter, joinBy, shadow, allAreas, mapData, data,
+ *               dataSorting
  * @product      highcharts highmaps
  * @requires     modules/tilemap.js
  * @optionparent plotOptions.tilemap
@@ -447,7 +449,7 @@ seriesType('tilemap', 'heatmap'
  *
  * @extends   series,plotOptions.tilemap
  * @excluding allAreas, dataParser, dataURL, joinBy, mapData, marker,
- *            pointRange, shadow, stack
+ *            pointRange, shadow, stack, dataSorting
  * @product   highcharts highmaps
  * @requires  modules/tilemap.js
  * @apioption series.tilemap

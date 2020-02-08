@@ -1,5 +1,5 @@
 /**
- * @license Highstock JS v8.0.0 (2019-12-10)
+ * @license Highstock JS v8.0.0 (2020-02-08)
  *
  * Indicator series type for Highstock
  *
@@ -85,25 +85,10 @@
          */
         {
             getValues: function (series, params) {
-                var period = params.period,
-                    xVal = series.xData,
-                    yVal = series.yData,
-                    yValLen = yVal ? yVal.length : 0,
-                    decimals = params.decimals, 
-                    // RSI starts calculations from the second point
-                    // Cause we need to calculate change between two points
-                    range = 1,
-                    RSI = [],
-                    xData = [],
-                    yData = [],
-                    index = 3,
-                    gain = 0,
-                    loss = 0,
-                    RSIPoint,
-                    change,
-                    avgGain,
-                    avgLoss,
-                    i;
+                var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal ? yVal.length : 0, decimals = params.decimals, 
+                // RSI starts calculations from the second point
+                // Cause we need to calculate change between two points
+                range = 1, RSI = [], xData = [], yData = [], index = 3, gain = 0, loss = 0, RSIPoint, change, avgGain, avgLoss, i;
                 // RSI requires close value
                 if ((xVal.length < period) || !isArray(yVal[0]) ||
                     yVal[0].length !== 4) {

@@ -1,6 +1,6 @@
 /* *
  *
- *  (c) 2010-2019 Torstein Honsi
+ *  (c) 2010-2020 Torstein Honsi
  *
  *  License: www.highcharts.com/license
  *
@@ -10,8 +10,8 @@
 'use strict';
 import H from '../parts/Globals.js';
 import U from '../parts/Utilities.js';
-var clamp = U.clamp, pick = U.pick;
-var defaultPlotOptions = H.defaultPlotOptions, merge = H.merge, noop = H.noop, seriesType = H.seriesType, seriesTypes = H.seriesTypes;
+var clamp = U.clamp, merge = U.merge, pick = U.pick;
+var defaultPlotOptions = H.defaultPlotOptions, noop = H.noop, seriesType = H.seriesType, seriesTypes = H.seriesTypes;
 var colProto = seriesTypes.column.prototype;
 /**
  * The column range is a cartesian series type with higher and lower

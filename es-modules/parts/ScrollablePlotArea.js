@@ -1,6 +1,6 @@
 /* *
  *
- *  (c) 2010-2019 Torstein Honsi
+ *  (c) 2010-2020 Torstein Honsi
  *
  *  License: www.highcharts.com/license
  *
@@ -19,8 +19,8 @@ WIP on vertical scrollable plot area (#9378). To do:
 'use strict';
 import H from './Globals.js';
 import U from './Utilities.js';
-var pick = U.pick;
-var addEvent = H.addEvent, Chart = H.Chart;
+var addEvent = U.addEvent, createElement = U.createElement, pick = U.pick;
+var Chart = H.Chart;
 /**
  * Options for a scrollable plot area. This feature provides a minimum size for
  * the plot area of the chart. If the size gets smaller than this, typically
@@ -183,10 +183,10 @@ Chart.prototype.setUpScrolling = function () {
         attribs.overflowY = 'auto';
     }
     // Add the necessary divs to provide scrolling
-    this.scrollingContainer = H.createElement('div', {
+    this.scrollingContainer = createElement('div', {
         'className': 'highcharts-scrolling'
     }, attribs, this.renderTo);
-    this.innerContainer = H.createElement('div', {
+    this.innerContainer = createElement('div', {
         'className': 'highcharts-inner-container'
     }, null, this.scrollingContainer);
     // Now move the container inside
@@ -245,7 +245,7 @@ Chart.prototype.applyFixed = function () {
     var fixedRenderer, scrollableWidth, scrollableHeight, firstTime = !this.fixedDiv, scrollableOptions = this.options.chart.scrollablePlotArea;
     // First render
     if (firstTime) {
-        this.fixedDiv = H.createElement('div', {
+        this.fixedDiv = createElement('div', {
             className: 'highcharts-fixed'
         }, {
             position: 'absolute',

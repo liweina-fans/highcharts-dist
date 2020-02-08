@@ -1,5 +1,5 @@
 /*
- Highcharts JS v8.0.0 (2019-12-10)
+ Highcharts JS v8.0.0 (2020-02-08)
 
  Highcharts 3D funnel module
 

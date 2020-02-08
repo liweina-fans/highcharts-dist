@@ -2,7 +2,7 @@
  *
  *  Experimental Highcharts module which enables visualization of a word cloud.
  *
- *  (c) 2016-2019 Highsoft AS
+ *  (c) 2016-2020 Highsoft AS
  *  Authors: Jon Arild Nygard
  *
  *  License: www.highcharts.com/license
@@ -12,11 +12,11 @@
 'use strict';
 import H from '../parts/Globals.js';
 import U from '../parts/Utilities.js';
-var extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, isObject = U.isObject;
+var extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, isObject = U.isObject, merge = U.merge;
 import drawPoint from '../mixins/draw-point.js';
 import polygon from '../mixins/polygon.js';
 import '../parts/Series.js';
-var merge = H.merge, noop = H.noop, find = H.find, getBoundingBoxFromPolygon = polygon.getBoundingBoxFromPolygon, getPolygon = polygon.getPolygon, isPolygonsColliding = polygon.isPolygonsColliding, movePolygon = polygon.movePolygon, Series = H.Series;
+var noop = H.noop, find = H.find, getBoundingBoxFromPolygon = polygon.getBoundingBoxFromPolygon, getPolygon = polygon.getPolygon, isPolygonsColliding = polygon.isPolygonsColliding, movePolygon = polygon.movePolygon, Series = H.Series;
 /**
  * Detects if there is a collision between two rectangles.
  *
@@ -515,7 +515,8 @@ function updateFieldBoundaries(field, rectangle) {
  *               negativeColor, pointInterval, pointIntervalUnit, pointPadding,
  *               pointPlacement, pointRange, pointStart, pointWidth, pointStart,
  *               pointWidth, shadow, showCheckbox, showInNavigator,
- *               softThreshold, stacking, threshold, zoneAxis, zones
+ *               softThreshold, stacking, threshold, zoneAxis, zones,
+ *               dataSorting
  * @product      highcharts
  * @since        6.0.0
  * @requires     modules/wordcloud
@@ -854,6 +855,7 @@ var wordCloudPoint = {
  * specified, it is inherited from [chart.type](#chart.type).
  *
  * @extends   series,plotOptions.wordcloud
+ * @exclude   dataSorting
  * @product   highcharts
  * @requires  modules/wordcloud
  * @apioption series.wordcloud

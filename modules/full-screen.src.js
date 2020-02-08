@@ -1,5 +1,5 @@
 /**
- * @license Highstock JS v8.0.0 (2019-12-10)
+ * @license Highstock JS v8.0.0 (2020-02-08)
  *
  * Advanced Highstock tools
  *
@@ -32,7 +32,7 @@
     _registerModule(_modules, 'modules/full-screen.src.js', [_modules['parts/Globals.js']], function (H) {
         /* *
          *
-         *  (c) 2009-2019 Sebastian Bochann
+         *  (c) 2009-2020 Sebastian Bochann
          *
          *  Full screen for Highcharts
          *
@@ -55,7 +55,7 @@
          *        Chart container
          */
         var FullScreen = H.FullScreen = function (container) {
-                this.init(container.parentNode);
+            this.init(container.parentNode);
         };
         FullScreen.prototype = {
             /**

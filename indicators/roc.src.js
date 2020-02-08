@@ -1,5 +1,5 @@
 /**
- * @license Highstock JS v8.0.0 (2019-12-10)
+ * @license Highstock JS v8.0.0 (2020-02-08)
  *
  * Indicator series type for Highstock
  *
@@ -31,7 +31,7 @@
     _registerModule(_modules, 'indicators/roc.src.js', [_modules['parts/Globals.js'], _modules['parts/Utilities.js']], function (H, U) {
         /* *
          *
-         *  (c) 2010-2019 Kacper Madej
+         *  (c) 2010-2020 Kacper Madej
          *
          *  License: www.highcharts.com/license
          *
@@ -49,8 +49,7 @@
                 Closing Price [n days ago] * 100
 
                Return y as null when avoiding division by zero */
-            var nDaysAgoY,
-                rocY;
+            var nDaysAgoY, rocY;
             if (index < 0) {
                 // y data given as an array of values
                 nDaysAgoY = yVal[i - period];
@@ -112,16 +111,7 @@
         {
             nameBase: 'Rate of Change',
             getValues: function (series, params) {
-                var period = params.period,
-                    xVal = series.xData,
-                    yVal = series.yData,
-                    yValLen = yVal ? yVal.length : 0,
-                    ROC = [],
-                    xData = [],
-                    yData = [],
-                    i,
-                    index = -1,
-                    ROCPoint;
+                var period = params.period, xVal = series.xData, yVal = series.yData, yValLen = yVal ? yVal.length : 0, ROC = [], xData = [], yData = [], i, index = -1, ROCPoint;
                 // Period is used as a number of time periods ago, so we need more
                 // (at least 1 more) data than the period value
                 if (xVal.length <= period) {

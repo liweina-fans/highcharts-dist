@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v8.0.0 (2019-12-10)
+ * @license Highcharts JS v8.0.0 (2020-02-08)
  *
  * Streamgraph module
  *
@@ -33,7 +33,7 @@
          *
          *  Streamgraph module
          *
-         *  (c) 2010-2019 Torstein Honsi
+         *  (c) 2010-2020 Torstein Honsi
          *
          *  License: www.highcharts.com/license
          *
@@ -88,7 +88,7 @@
          * specified, it is inherited from [chart.type](#chart.type).
          *
          * @extends   series,plotOptions.streamgraph
-         * @excluding dataParser, dataURL
+         * @excluding dataParser, dataURL, step
          * @product   highcharts highstock
          * @requires  modules/streamgraph
          * @apioption series.streamgraph

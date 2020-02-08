@@ -1,5 +1,5 @@
 /*
- Highstock JS v8.0.0 (2019-12-10)
+ Highstock JS v8.0.0 (2020-02-08)
 
  (c) 2010-2019 Highsoft AS
  Author: Sebastian Domas

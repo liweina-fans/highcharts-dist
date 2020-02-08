@@ -2,7 +2,7 @@
  *
  *  Wind barb series module
  *
- *  (c) 2010-2019 Torstein Honsi
+ *  (c) 2010-2020 Torstein Honsi
  *
  *  License: www.highcharts.com/license
  *
@@ -380,7 +380,7 @@ seriesType('windbarb', 'column'
 /**
  * The wind speed in meters per second.
  *
- * @type      {number}
+ * @type      {number|null}
  * @product   highcharts highstock
  * @apioption series.windbarb.data.value
  */

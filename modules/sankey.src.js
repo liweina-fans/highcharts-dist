@@ -1,5 +1,5 @@
 /**
- * @license Highcharts JS v8.0.0 (2019-12-10)
+ * @license Highcharts JS v8.0.0 (2020-02-08)
  *
  * Sankey diagram module
  *
@@ -34,9 +34,7 @@
          *  !!!!!!! SOURCE GETS TRANSPILED BY TYPESCRIPT. EDIT TS FILE ONLY. !!!!!!!
          *
          * */
-        var defined = U.defined,
-            extend = U.extend,
-            pick = U.pick;
+        var defined = U.defined, extend = U.extend, pick = U.pick;
         var Point = H.Point;
         H.NodesMixin = {
             /* eslint-disable valid-jsdoc */
@@ -54,10 +52,7 @@
                         return node.id === id;
                     });
                 }
-                var node = findById(this.nodes,
-                    id),
-                    PointClass = this.pointClass,
-                    options;
+                var node = findById(this.nodes, id), PointClass = this.pointClass, options;
                 if (!node) {
                     options = this.options.nodes && findById(this.options.nodes, id);
                     node = (new PointClass()).init(this, extend({
@@ -83,8 +78,7 @@
                      * @private
                      */
                     node.getSum = function () {
-                        var sumTo = 0,
-                            sumFrom = 0;
+                        var sumTo = 0, sumFrom = 0;
                         node.linksTo.forEach(function (link) {
                             sumTo += link.weight;
                         });
@@ -127,8 +121,7 @@
              * but pushed to the this.nodes array.
              */
             generatePoints: function () {
-                var chart = this.chart,
-                    nodeLookup = {};
+                var chart = this.chart, nodeLookup = {};
                 H.Series.prototype.generatePoints.call(this);
                 if (!this.nodes) {
                     this.nodes = []; // List of Point-like node items
@@ -191,19 +184,17 @@
              * highlight all connected nodes.
              */
             setNodeState: function (state) {
-                var args = arguments,
-                    others = this.isNode ? this.linksTo.concat(this.linksFrom) :
-                        [this.fromNode,
-                    this.toNode];
+                var args = arguments, others = this.isNode ? this.linksTo.concat(this.linksFrom) :
+                    [this.fromNode, this.toNode];
                 if (state !== 'select') {
                     others.forEach(function (linkOrNode) {
-                        if (linkOrNode.series) {
+                        if (linkOrNode && linkOrNode.series) {
                             Point.prototype.setState.apply(linkOrNode, args);
                             if (!linkOrNode.isNode) {
                                 if (linkOrNode.fromNode.graphic) {
                                     Point.prototype.setState.apply(linkOrNode.fromNode, args);
                                 }
-                                if (linkOrNode.toNode.graphic) {
+                                if (linkOrNode.toNode && linkOrNode.toNode.graphic) {
                                     Point.prototype.setState.apply(linkOrNode.toNode, args);
                                 }
                             }
@@ -216,43 +207,28 @@
         };
 
     });
-    _registerModule(_modules, 'mixins/tree-series.js', [_modules['parts/Globals.js'], _modules['parts/Utilities.js']], function (H, U) {
+    _registerModule(_modules, 'mixins/tree-series.js', [_modules['parts/Color.js'], _modules['parts/Utilities.js']], function (Color, U) {
         /* *
          *
          *  !!!!!!! SOURCE GETS TRANSPILED BY TYPESCRIPT. EDIT TS FILE ONLY. !!!!!!!
          *
          * */
-        var extend = U.extend,
-            isArray = U.isArray,
-            isNumber = U.isNumber,
-            isObject = U.isObject,
-            pick = U.pick;
+        var extend = U.extend, isArray = U.isArray, isNumber = U.isNumber, isObject = U.isObject, merge = U.merge, pick = U.pick;
         var isBoolean = function (x) {
-                return typeof x === 'boolean';
+            return typeof x === 'boolean';
         }, isFn = function (x) {
             return typeof x === 'function';
-        }, merge = H.merge;
+        };
         /* eslint-disable valid-jsdoc */
         /**
          * @todo Combine buildTree and buildNode with setTreeValues
          * @todo Remove logic from Treemap and make it utilize this mixin.
          * @private
          */
-        var setTreeValues = function setTreeValues(tree,
-            options) {
-                var before = options.before,
-            idRoot = options.idRoot,
-            mapIdToNode = options.mapIdToNode,
-            nodeRoot = mapIdToNode[idRoot],
-            levelIsConstant = (isBoolean(options.levelIsConstant) ?
-                    options.levelIsConstant :
-                    true),
-            points = options.points,
-            point = points[tree.i],
-            optionsPoint = point && point.options || {},
-            childrenTotal = 0,
-            children = [],
-            value;
+        var setTreeValues = function setTreeValues(tree, options) {
+            var before = options.before, idRoot = options.idRoot, mapIdToNode = options.mapIdToNode, nodeRoot = mapIdToNode[idRoot], levelIsConstant = (isBoolean(options.levelIsConstant) ?
+                options.levelIsConstant :
+                true), points = options.points, point = points[tree.i], optionsPoint = point && point.options || {}, childrenTotal = 0, children = [], value;
             extend(tree, {
                 levelDynamic: tree.level - (levelIsConstant ? 0 : nodeRoot.level),
                 name: pick(point && point.name, ''),
@@ -264,8 +240,7 @@
             }
             // First give the children some values
             tree.children.forEach(function (child, i) {
-                var newOptions = extend({},
-                    options);
+                var newOptions = extend({}, options);
                 extend(newOptions, {
                     index: i,
                     siblings: tree.children.length,
@@ -291,24 +266,8 @@
         /**
          * @private
          */
-        var getColor = function getColor(node,
-            options) {
-                var index = options.index,
-            mapOptionsToLevel = options.mapOptionsToLevel,
-            parentColor = options.parentColor,
-            parentColorIndex = options.parentColorIndex,
-            series = options.series,
-            colors = options.colors,
-            siblings = options.siblings,
-            points = series.points,
-            getColorByPoint,
-            chartOptionsChart = series.chart.options.chart,
-            point,
-            level,
-            colorByPoint,
-            colorIndexByPoint,
-            color,
-            colorIndex;
+        var getColor = function getColor(node, options) {
+            var index = options.index, mapOptionsToLevel = options.mapOptionsToLevel, parentColor = options.parentColor, parentColorIndex = options.parentColorIndex, series = options.series, colors = options.colors, siblings = options.siblings, points = series.points, getColorByPoint, chartOptionsChart = series.chart.options.chart, point, level, colorByPoint, colorIndexByPoint, color, colorIndex;
             /**
              * @private
              */
@@ -316,7 +275,7 @@
                 var colorVariation = level && level.colorVariation;
                 if (colorVariation) {
                     if (colorVariation.key === 'brightness') {
-                        return H.color(color).brighten(colorVariation.to * (index / siblings)).get();
+                        return Color.parse(color).brighten(colorVariation.to * (index / siblings)).get();
                     }
                 }
                 return color;
@@ -359,13 +318,7 @@
          *         Returns a map from level number to its given options.
          */
         var getLevelOptions = function getLevelOptions(params) {
-                var result = null,
-            defaults,
-            converted,
-            i,
-            from,
-            to,
-            levels;
+            var result = null, defaults, converted, i, from, to, levels;
             if (isObject(params)) {
                 result = {};
                 from = isNumber(params.from) ? params.from : 1;
@@ -374,9 +327,7 @@
                 defaults = isObject(params.defaults) ? params.defaults : {};
                 if (isArray(levels)) {
                     converted = levels.reduce(function (obj, item) {
-                        var level,
-                            levelIsConstant,
-                            options;
+                        var level, levelIsConstant, options;
                         if (isObject(item) && isNumber(item.level)) {
                             options = merge({}, item);
                             levelIsConstant = (isBoolean(options.levelIsConstant) ?
@@ -418,8 +369,7 @@
          *         Returns the resulting rootId after update.
          */
         var updateRootId = function (series) {
-                var rootId,
-            options;
+            var rootId, options;
             if (isObject(series)) {
                 // Get the series options.
                 options = isObject(series.options) ? series.options : {};
@@ -435,20 +385,20 @@
             return rootId;
         };
         var result = {
-                getColor: getColor,
-                getLevelOptions: getLevelOptions,
-                setTreeValues: setTreeValues,
-                updateRootId: updateRootId
-            };
+            getColor: getColor,
+            getLevelOptions: getLevelOptions,
+            setTreeValues: setTreeValues,
+            updateRootId: updateRootId
+        };
 
         return result;
     });
-    _registerModule(_modules, 'modules/sankey.src.js', [_modules['parts/Globals.js'], _modules['parts/Utilities.js'], _modules['mixins/tree-series.js']], function (H, U, mixinTreeSeries) {
+    _registerModule(_modules, 'modules/sankey.src.js', [_modules['parts/Globals.js'], _modules['parts/Color.js'], _modules['parts/Utilities.js'], _modules['mixins/tree-series.js']], function (H, Color, U, mixinTreeSeries) {
         /* *
          *
          *  Sankey diagram module
          *
-         *  (c) 2010-2019 Torstein Honsi
+         *  (c) 2010-2020 Torstein Honsi
          *
          *  License: www.highcharts.com/license
          *
@@ -533,31 +483,21 @@
         * @name Highcharts.SeriesSankeyDataLabelsFormatterContextObject#point
         * @type {Highcharts.SankeyNodeObject}
         */
-        var defined = U.defined,
-            isObject = U.isObject,
-            pick = U.pick,
-            relativeLength = U.relativeLength;
+        var defined = U.defined, isObject = U.isObject, merge = U.merge, pick = U.pick, relativeLength = U.relativeLength, stableSort = U.stableSort;
         var getLevelOptions = mixinTreeSeries.getLevelOptions;
-        var find = H.find,
-            merge = H.merge,
-            seriesType = H.seriesType,
-            Point = H.Point;
+        var find = H.find, seriesType = H.seriesType, Point = H.Point;
         // eslint-disable-next-line valid-jsdoc
         /**
          * @private
          */
         var getDLOptions = function getDLOptions(params) {
-                var optionsPoint = (isObject(params.optionsPoint) ?
-                    params.optionsPoint.dataLabels :
-                    {}),
-            optionsLevel = (isObject(params.level) ?
-                    params.level.dataLabels :
-                    {}),
-            options = merge({
-                    style: {}
-                },
-            optionsLevel,
-            optionsPoint);
+            var optionsPoint = (isObject(params.optionsPoint) ?
+                params.optionsPoint.dataLabels :
+                {}), optionsLevel = (isObject(params.level) ?
+                params.level.dataLabels :
+                {}), options = merge({
+                style: {}
+            }, optionsLevel, optionsPoint);
             return options;
         };
         /**
@@ -589,7 +529,7 @@
          *               pointInterval, pointIntervalUnit, pointPadding,
          *               pointPlacement, pointRange, pointStart, pointWidth,
          *               shadow, softThreshold, stacking, threshold, zoneAxis,
-         *               zones, minPointLength
+         *               zones, minPointLength, dataSorting
          * @requires     modules/sankey
          * @optionparent plotOptions.sankey
          */
@@ -844,9 +784,7 @@
              * @private
              */
             createNodeColumn: function () {
-                var chart = this.chart,
-                    column = [],
-                    nodePadding = this.getNodePadding();
+                var chart = this.chart, column = [], nodePadding = this.getNodePadding();
                 column.sum = function () {
                     return this.reduce(function (sum, node) {
                         return sum + node.getSum();
@@ -854,10 +792,16 @@
                 };
                 // Get the offset in pixels of a node inside the column.
                 column.offset = function (node, factor) {
-                    var offset = 0,
-                        totalNodeOffset;
+                    var offset = 0, totalNodeOffset;
                     for (var i = 0; i < column.length; i++) {
-                        totalNodeOffset = column[i].getSum() * factor + nodePadding;
+                        var sum = column[i].getSum();
+                        if (sum) {
+                            totalNodeOffset = sum * factor + nodePadding;
+                        }
+                        else {
+                            // If node sum equals 0 nodePadding is missed #12453
+                            totalNodeOffset = 0;
+                        }
                         if (column[i] === node) {
                             return {
                                 relativeTop: offset + relativeLength(node.options.offset || 0, totalNodeOffset)
@@ -868,10 +812,9 @@
                 };
                 // Get the column height in pixels.
                 column.top = function (factor) {
-                    var height = this.reduce(function (height,
-                        node) {
-                            if (height > 0) {
-                                height += nodePadding;
+                    var height = this.reduce(function (height, node) {
+                        if (height > 0) {
+                            height += nodePadding;
                         }
                         height += node.getSum() * factor;
                         return height;
@@ -888,10 +831,7 @@
             createNodeColumns: function () {
                 var columns = [];
                 this.nodes.forEach(function (node) {
-                    var fromColumn = -1,
-                        fromNode,
-                        i,
-                        point;
+                    var fromColumn = -1, fromNode, i, point;
                     if (!defined(node.options.column)) {
                         // No links to this node, place it left
                         if (node.linksTo.length === 0) {
@@ -952,9 +892,9 @@
              */
             pointAttribs: function (point, state) {
                 var series = this, level = point.isNode ? point.level : point.fromNode.level, levelOptions = series.mapOptionsToLevel[level || 0] || {}, options = point.options, stateOptions = (levelOptions.states && levelOptions.states[state]) || {}, values = [
-                        'colorByPoint', 'borderColor', 'borderWidth', 'linkOpacity'
-                    ].reduce(function (obj, key) {
-                        obj[key] = pick(stateOptions[key], options[key], levelOptions[key], series.options[key]);
+                    'colorByPoint', 'borderColor', 'borderWidth', 'linkOpacity'
+                ].reduce(function (obj, key) {
+                    obj[key] = pick(stateOptions[key], options[key], levelOptions[key], series.options[key]);
                     return obj;
                 }, {}), color = pick(stateOptions.color, options.color, values.colorByPoint ? point.color : levelOptions.color);
                 // Node attributes
@@ -967,7 +907,7 @@
                 }
                 // Link attributes
                 return {
-                    fill: H.color(color).setOpacity(values.linkOpacity).get()
+                    fill: Color.parse(color).setOpacity(values.linkOpacity).get()
                 };
             },
             /**
@@ -986,7 +926,9 @@
                     if (typeof node.level === 'undefined') {
                         node.level = level;
                         node.linksFrom.forEach(function (link) {
-                            order(link.toNode, level + 1);
+                            if (link.toNode) {
+                                order(link.toNode, level + 1);
+                            }
                         });
                     }
                 }
@@ -1001,7 +943,7 @@
                         .forEach(function (node) {
                         order(node, 0);
                     });
-                    H.stableSort(this.nodes, function (a, b) {
+                    stableSort(this.nodes, function (a, b) {
                         return a.level - b.level;
                     });
                 }
@@ -1011,81 +953,61 @@
              * @private
              */
             translateNode: function (node, column) {
-                var translationFactor = this.translationFactor,
-                    chart = this.chart,
-                    options = this.options,
-                    sum = node.getSum(),
-                    height = Math.round(sum * translationFactor),
-                    crisp = Math.round(options.borderWidth) % 2 / 2,
-                    nodeOffset = column.offset(node,
-                    translationFactor),
-                    fromNodeTop = Math.floor(pick(nodeOffset.absoluteTop, (column.top(translationFactor) +
-                        nodeOffset.relativeTop))) + crisp,
-                    left = Math.floor(this.colDistance * node.column +
-                        options.borderWidth / 2) + crisp,
-                    nodeLeft = chart.inverted ?
-                        chart.plotSizeX - left :
-                        left,
-                    nodeWidth = Math.round(this.nodeWidth);
+                var translationFactor = this.translationFactor, chart = this.chart, options = this.options, sum = node.getSum(), height = Math.round(sum * translationFactor), crisp = Math.round(options.borderWidth) % 2 / 2, nodeOffset = column.offset(node, translationFactor), fromNodeTop = Math.floor(pick(nodeOffset.absoluteTop, (column.top(translationFactor) +
+                    nodeOffset.relativeTop))) + crisp, left = Math.floor(this.colDistance * node.column +
+                    options.borderWidth / 2) + crisp, nodeLeft = chart.inverted ?
+                    chart.plotSizeX - left :
+                    left, nodeWidth = Math.round(this.nodeWidth);
                 node.sum = sum;
-                // Draw the node
-                node.shapeType = 'rect';
-                node.nodeX = nodeLeft;
-                node.nodeY = fromNodeTop;
-                if (!chart.inverted) {
-                    node.shapeArgs = {
-                        x: nodeLeft,
-                        y: fromNodeTop,
-                        width: node.options.width || options.width || nodeWidth,
-                        height: node.options.height || options.height || height
-                    };
+                // If node sum is 0, don't render the rect #12453
+                if (sum) {
+                    // Draw the node
+                    node.shapeType = 'rect';
+                    node.nodeX = nodeLeft;
+                    node.nodeY = fromNodeTop;
+                    if (!chart.inverted) {
+                        node.shapeArgs = {
+                            x: nodeLeft,
+                            y: fromNodeTop,
+                            width: node.options.width || options.width || nodeWidth,
+                            height: node.options.height || options.height || height
+                        };
+                    }
+                    else {
+                        node.shapeArgs = {
+                            x: nodeLeft - nodeWidth,
+                            y: chart.plotSizeY - fromNodeTop - height,
+                            width: node.options.height || options.height || nodeWidth,
+                            height: node.options.width || options.width || height
+                        };
+                    }
+                    node.shapeArgs.display = node.hasShape() ? '' : 'none';
+                    // Calculate data label options for the point
+                    node.dlOptions = getDLOptions({
+                        level: this.mapOptionsToLevel[node.level],
+                        optionsPoint: node.options
+                    });
+                    // Pass test in drawPoints
+                    node.plotY = 1;
                 }
                 else {
-                    node.shapeArgs = {
-                        x: nodeLeft - nodeWidth,
-                        y: chart.plotSizeY - fromNodeTop - height,
-                        width: node.options.height || options.height || nodeWidth,
-                        height: node.options.width || options.width || height
+                    node.dlOptions = {
+                        enabled: false
                     };
                 }
-                node.shapeArgs.display = node.hasShape() ? '' : 'none';
-                // Calculate data label options for the point
-                node.dlOptions = getDLOptions({
-                    level: this.mapOptionsToLevel[node.level],
-                    optionsPoint: node.options
-                });
-                // Pass test in drawPoints
-                node.plotY = 1;
             },
             /**
              * Run translation operations for one link.
              * @private
              */
             translateLink: function (point) {
-                var fromNode = point.fromNode,
-                    toNode = point.toNode,
-                    chart = this.chart,
-                    translationFactor = this.translationFactor,
-                    linkHeight = Math.max(point.weight * translationFactor,
-                    this.options.minLinkWidth),
-                    options = this.options,
-                    fromLinkTop = (fromNode.offset(point, 'linksFrom') *
-                        translationFactor),
-                    curvy = ((chart.inverted ? -this.colDistance : this.colDistance) *
-                        options.curveFactor),
-                    fromY = fromNode.nodeY + fromLinkTop,
-                    nodeLeft = fromNode.nodeX,
-                    toColTop = this.nodeColumns[toNode.column]
-                        .top(translationFactor),
-                    toY = (toColTop +
-                        (toNode.offset(point, 'linksTo') *
-                            translationFactor) +
-                        this.nodeColumns[toNode.column].offset(toNode,
-                    translationFactor).relativeTop),
-                    nodeW = this.nodeWidth,
-                    right = toNode.column * this.colDistance,
-                    outgoing = point.outgoing,
-                    straight = right > nodeLeft;
+                var fromNode = point.fromNode, toNode = point.toNode, chart = this.chart, translationFactor = this.translationFactor, linkHeight = Math.max(point.weight * translationFactor, this.options.minLinkWidth), options = this.options, fromLinkTop = (fromNode.offset(point, 'linksFrom') *
+                    translationFactor), curvy = ((chart.inverted ? -this.colDistance : this.colDistance) *
+                    options.curveFactor), fromY = fromNode.nodeY + fromLinkTop, nodeLeft = fromNode.nodeX, toColTop = this.nodeColumns[toNode.column]
+                    .top(translationFactor), toY = (toColTop +
+                    (toNode.offset(point, 'linksTo') *
+                        translationFactor) +
+                    this.nodeColumns[toNode.column].offset(toNode, translationFactor).relativeTop), nodeW = this.nodeWidth, right = toNode.column * this.colDistance, outgoing = point.outgoing, straight = right > nodeLeft;
                 if (chart.inverted) {
                     fromY = chart.plotSizeY - fromY;
                     toY = chart.plotSizeY - toY;
@@ -1131,28 +1053,7 @@
                     //   down.
                 }
                 else {
-                    var bend = 20,
-                        vDist = chart.plotHeight - fromY - linkHeight,
-                        x1 = right - bend - linkHeight,
-                        x2 = right - bend,
-                        x3 = right,
-                        x4 = nodeLeft + nodeW,
-                        x5 = x4 + bend,
-                        x6 = x5 + linkHeight,
-                        fy1 = fromY,
-                        fy2 = fromY + linkHeight,
-                        fy3 = fy2 + bend,
-                        y4 = fy3 + vDist,
-                        y5 = y4 + bend,
-                        y6 = y5 + linkHeight,
-                        ty1 = toY,
-                        ty2 = ty1 + linkHeight,
-                        ty3 = ty2 + bend,
-                        cfy1 = fy2 - linkHeight * 0.7,
-                        cy2 = y5 + linkHeight * 0.7,
-                        cty1 = ty2 - linkHeight * 0.7,
-                        cx1 = x3 - linkHeight * 0.7,
-                        cx2 = x4 + linkHeight * 0.7;
+                    var bend = 20, vDist = chart.plotHeight - fromY - linkHeight, x1 = right - bend - linkHeight, x2 = right - bend, x3 = right, x4 = nodeLeft + nodeW, x5 = x4 + bend, x6 = x5 + linkHeight, fy1 = fromY, fy2 = fromY + linkHeight, fy3 = fy2 + bend, y4 = fy3 + vDist, y5 = y4 + bend, y6 = y5 + linkHeight, ty1 = toY, ty2 = ty1 + linkHeight, ty3 = ty2 + bend, cfy1 = fy2 - linkHeight * 0.7, cy2 = y5 + linkHeight * 0.7, cty1 = ty2 - linkHeight * 0.7, cx1 = x3 - linkHeight * 0.7, cx2 = x4 + linkHeight * 0.7;
                     point.shapeArgs = {
                         d: [
                             'M', x4, fy1,
@@ -1199,18 +1100,13 @@
                 this.generatePoints();
                 this.nodeColumns = this.createNodeColumns();
                 this.nodeWidth = relativeLength(this.options.nodeWidth, this.chart.plotSizeX);
-                var series = this,
-                    chart = this.chart,
-                    options = this.options,
-                    nodeWidth = this.nodeWidth,
-                    nodeColumns = this.nodeColumns,
-                    nodePadding = this.getNodePadding();
+                var series = this, chart = this.chart, options = this.options, nodeWidth = this.nodeWidth, nodeColumns = this.nodeColumns, nodePadding = this.getNodePadding();
                 // Find out how much space is needed. Base it on the translation
                 // factor of the most spaceous column.
                 this.translationFactor = nodeColumns.reduce(function (translationFactor, column) {
                     var height = chart.plotSizeY -
-                            options.borderWidth -
-                            (column.length - 1) * nodePadding;
+                        options.borderWidth -
+                        (column.length - 1) * nodePadding;
                     return Math.min(translationFactor, height / column.sum());
                 }, Infinity);
                 this.colDistance =
@@ -1248,8 +1144,12 @@
                 this.nodes.forEach(function (node) {
                     // Translate the links from this node
                     node.linksFrom.forEach(function (linkPoint) {
-                        series.translateLink(linkPoint);
-                        linkPoint.allowShadow = false;
+                        // If weight is 0 - don't render the link path #12453,
+                        // render null points (for organization chart)
+                        if ((linkPoint.weight || linkPoint.isNull) && linkPoint.to) {
+                            series.translateLink(linkPoint);
+                            linkPoint.allowShadow = false;
+                        }
                     });
                 });
             },
@@ -1296,7 +1196,7 @@
          *            groupZPadding, label, maxPointWidth, negativeColor, pointInterval,
          *            pointIntervalUnit, pointPadding, pointPlacement, pointRange,
          *            pointStart, pointWidth, shadow, softThreshold, stacking,
-         *            threshold, zoneAxis, zones
+         *            threshold, zoneAxis, zones, dataSorting
          * @product   highcharts
          * @requires  modules/sankey
          * @apioption series.sankey
